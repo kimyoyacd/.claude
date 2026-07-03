@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Color Combo Generator</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+
+  <header class="app-header">
+    <h1>Color Combo Generator</h1>
+    <p class="subtitle">제안서 표지에 어울리는 컬러 조합을 자동으로 만들거나, 이미지·화면에서 바로 뽑아보세요.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2 class="panel-title">1. 자동 생성</h2>
+      <div class="controls">
+        <div class="control-group">
+          <label>색상 개수</label>
+          <div class="segmented" id="countControl">
+            <button type="button" data-value="2">2</button>
+            <button type="button" data-value="3">3</button>
+            <button type="button" data-value="4" class="active">4</button>
+            <button type="button" data-value="5">5</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="schemeSelect">조합 방식</label>
+          <select id="schemeSelect">
+            <option value="random">랜덤</option>
+            <option value="complementary">보색</option>
+            <option value="analogous">유사색</option>
+            <option value="triadic">삼각 배색</option>
+            <option value="splitComplementary">분리 보색</option>
+            <option value="tetradic">사각 배색</option>
+            <option value="monochromatic">단색조</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="toneSelect">무드</label>
+          <select id="toneSelect">
+            <option value="contrast">다크+파스텔 (표지 추천)</option>
+            <option value="vivid">비비드</option>
+            <option value="pastel">파스텔</option>
+            <option value="earthy">어시(흙톤)</option>
+            <option value="moody">무디(다크)</option>
+          </select>
+        </div>
+        <button id="generateBtn" class="primary-btn">✨ 조합 생성 <kbd>Space</kbd></button>
+      </div>
+
+      <div class="palette" id="palette"></div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">2. 표지 미리보기</h2>
+      <div class="preview-wrap">
+        <div class="preview-card" id="previewCard">
+          <input id="titleInput" class="cover-title" value="제안서 제목을 입력하세요" />
+          <div class="cover-swatches" id="coverSwatches"></div>
+          <div class="cover-footer">
+            <div class="cover-bar" id="coverBar"></div>
+            <span class="cover-brand">Color Combo Generator</span>
+          </div>
+        </div>
+        <div class="preview-actions">
+          <button id="copyHexBtn" class="ghost-btn">HEX 목록 복사</button>
+          <button id="copyCssBtn" class="ghost-btn">CSS 변수 복사</button>
+          <button id="downloadBtn" class="ghost-btn">PNG로 저장</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">3. 색 추출하기</h2>
+      <p class="panel-desc">화면 어디서든 픽셀 색을 뽑거나, 이미지를 올려서 대표 색상을 헥스코드로 추출하세요.</p>
+
+      <div class="extract-grid">
+        <div class="extract-box">
+          <h3>화면에서 뽑기</h3>
+          <p class="extract-hint">브라우저 창 밖의 다른 앱 화면 색도 그대로 집을 수 있어요. (Chrome/Edge 지원)</p>
+          <button id="eyedropperBtn" class="ghost-btn">🎯 스포이트로 색 뽑기</button>
+          <div class="picked-list" id="pickedList"></div>
+        </div>
+
+        <div class="extract-box">
+          <h3>이미지에서 뽑기</h3>
+          <p class="extract-hint">이미지를 드래그하거나 클릭해서 올리면 대표 색상을 자동으로 추출해요.</p>
+          <label class="dropzone" id="dropzone" for="imageInput">
+            <span id="dropzoneText">이미지를 여기로 드래그하거나 클릭해서 선택</span>
+            <img id="imagePreview" alt="" hidden />
+          </label>
+          <input type="file" id="imageInput" accept="image/*" hidden />
+          <div class="picked-list" id="imagePalette"></div>
+          <button id="useImagePaletteBtn" class="ghost-btn" hidden>이 조합을 팔레트에 사용하기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="history-header">
+        <h2 class="panel-title">최근 조합</h2>
+        <button id="clearHistoryBtn" class="text-btn">기록 지우기</button>
+      </div>
+      <div class="history-strip" id="historyStrip"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<canvas id="hiddenCanvas" hidden></canvas>
+<script src="app.js"></script>
+</body>
+</html>
