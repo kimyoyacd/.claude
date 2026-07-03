@@ -55,11 +55,134 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.app { max-width: 960px; margin: 0 auto; padding: 48px 20px 96px; }
+.app { max-width: 1080px; margin: 0 auto; padding: 48px 20px 96px; }
 
 .app-header h1 { font-size: clamp(26px, 5vw, 34px); margin: 0 0 8px; letter-spacing: -0.02em; }
-.subtitle { color: var(--ink-soft); margin: 0 0 36px; font-size: 15px; }
+.subtitle { color: var(--ink-soft); margin: 0 0 28px; font-size: 15px; }
 
+/* ---------- controls ---------- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip-group-label { font-size: 12px; color: var(--ink-soft); margin-right: 2px; }
+
+.chip {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.chip.active { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+
+.primary-btn {
+  border: none; background: var(--ink); color: var(--surface);
+  padding: 12px 22px; border-radius: 12px; font-size: 14px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-left: auto;
+}
+.primary-btn kbd { font-size: 11px; opacity: 0.6; border: 1px solid currentColor; border-radius: 4px; padding: 1px 5px; }
+
+button:focus-visible, .dropzone:focus-within {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---------- combo cards ---------- */
+.combo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.combo-card {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+}
+.combo-card.pinned { border-color: var(--ink); }
+
+.combo-blocks { display: flex; flex-direction: column; height: 380px; }
+
+.block {
+  flex: 1;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  gap: 6px;
+  text-align: center;
+  font-family: inherit;
+}
+
+.block-change {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  border-radius: 14px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0.65;
+}
+.block-change:hover { opacity: 1; }
+/* 2색 카드: 텍스트가 두 색이 만나는 경계 쪽으로 모인다 */
+.combo-blocks.duo .block:first-child { justify-content: flex-end; padding-bottom: 34px; }
+.combo-blocks.duo .block:last-child { justify-content: flex-start; padding-top: 34px; }
+.combo-blocks.duo .block-name { font-size: 25px; }
+.block-name {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.block-hex {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  opacity: 0.92;
+}
+
+.card-actions { display: flex; border-top: 1px solid var(--line); }
+.card-actions button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 12px;
+  padding: 10px 4px;
+  cursor: pointer;
+  border-right: 1px solid var(--line);
+}
+.card-actions button:last-child { border-right: none; }
+.card-actions button:hover { color: var(--ink); }
+.card-actions button.pin-on { color: var(--ink); font-weight: 700; }
+
+.hint { font-size: 12px; color: var(--ink-soft); margin: -28px 0 40px; }
+
+/* ---------- panels ---------- */
 .panel {
   background: var(--surface);
   border-radius: var(--radius);
@@ -67,94 +190,14 @@ body {
   padding: 24px;
   margin-bottom: 24px;
 }
-
 .panel-title { font-size: 16px; margin: 0 0 16px; letter-spacing: -0.01em; }
 .panel-desc { color: var(--ink-soft); font-size: 13px; margin: -8px 0 20px; }
-
-.controls { display: flex; flex-wrap: wrap; gap: 16px 20px; align-items: flex-end; margin-bottom: 24px; }
-.control-group { display: flex; flex-direction: column; gap: 6px; }
-.control-group label { font-size: 12px; color: var(--ink-soft); }
-
-select {
-  appearance: none;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink);
-  padding: 9px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-  min-width: 150px;
-}
-
-.segmented { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.segmented button {
-  border: none; background: transparent; color: var(--ink);
-  padding: 9px 16px; font-size: 14px; cursor: pointer;
-  border-right: 1px solid var(--line);
-}
-.segmented button:last-child { border-right: none; }
-.segmented button.active { background: var(--ink); color: var(--surface); }
-
-.primary-btn {
-  border: none; background: var(--ink); color: var(--surface);
-  padding: 11px 20px; border-radius: 10px; font-size: 14px; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px;
-}
-.primary-btn kbd { font-size: 11px; opacity: 0.6; border: 1px solid currentColor; border-radius: 4px; padding: 1px 5px; }
 
 .ghost-btn, .text-btn {
   border: 1px solid var(--line); background: transparent; color: var(--ink);
   padding: 9px 14px; border-radius: 10px; font-size: 13px; cursor: pointer;
 }
 .text-btn { border: none; color: var(--ink-soft); padding: 4px 8px; }
-
-button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus-within {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-}
-
-.palette { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-
-.swatch { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); position: relative; }
-.swatch-color {
-  height: 96px; display: flex; align-items: flex-start; justify-content: flex-end;
-  padding: 8px; cursor: pointer;
-}
-.lock-btn {
-  border: none; background: rgba(255, 255, 255, 0.78);
-  width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
-  font-size: 13px; display: flex; align-items: center; justify-content: center;
-}
-.swatch-label {
-  padding: 8px 10px; font-size: 12px; background: var(--surface);
-  display: flex; justify-content: space-between; align-items: center; color: var(--ink-soft);
-}
-.swatch-label b { color: var(--ink); font-weight: 600; cursor: pointer; }
-.swatch-label b:hover { text-decoration: underline; }
-.swatch-label input[type="color"] {
-  width: 0; height: 0; padding: 0; border: none; opacity: 0; position: absolute;
-}
-
-.preview-wrap { display: flex; flex-direction: column; gap: 16px; align-items: center; }
-.preview-card {
-  width: 100%; max-width: 380px; border-radius: 12px;
-  border: 1px solid var(--line); padding: 24px 20px 16px; background: var(--surface);
-}
-.cover-title {
-  width: 100%; border: none; background: transparent;
-  font-size: 20px; font-weight: 600; color: var(--ink);
-  padding: 0 0 20px; outline: none;
-}
-.cover-swatches { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-.cover-donut { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.cover-donut .ring { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.cover-donut .dot { width: 26px; height: 26px; border-radius: 50%; }
-.cover-donut span { font-size: 10px; color: var(--ink-soft); }
-.cover-footer { display: flex; flex-direction: column; gap: 8px; }
-.cover-bar { display: flex; height: 14px; border-radius: 4px; overflow: hidden; }
-.cover-bar span { flex: 1; }
-.cover-brand { font-size: 10px; color: var(--ink-soft); }
-.preview-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
 .extract-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 720px) { .extract-grid { grid-template-columns: 1fr; } }
@@ -176,7 +219,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
   display: flex; align-items: center; gap: 8px;
   border: 1px solid var(--line); border-radius: 20px;
   padding: 4px 10px 4px 4px; font-size: 12px; cursor: pointer;
-  background: transparent; color: var(--ink);
+  background: transparent; color: var(--ink); font-family: inherit;
 }
 .picked-chip .dot { width: 20px; height: 20px; border-radius: 50%; }
 
@@ -184,9 +227,10 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
 .history-header .panel-title { margin: 0; }
 .history-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
 .history-item {
-  display: flex; flex-shrink: 0; border-radius: 8px; overflow: hidden;
-  border: 1px solid var(--line); cursor: pointer; width: 72px; height: 40px;
-  padding: 0; background: none;
+  display: flex; flex-direction: column; flex-shrink: 0;
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--line); cursor: pointer;
+  width: 44px; height: 58px; padding: 0; background: none;
 }
 .history-item span { flex: 1; }
 
@@ -197,6 +241,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
   padding: 10px 18px; border-radius: 10px; font-size: 13px;
   opacity: 0; pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -210,72 +255,34 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
 
   <header class="app-header">
     <h1>Color Combo Generator</h1>
-    <p class="subtitle">제안서 표지에 어울리는 컬러 조합을 자동으로 만들거나, 이미지·화면에서 바로 뽑아보세요.</p>
+    <p class="subtitle">스페이스바 한 번에 조합 카드 4장. 마음에 드는 카드는 고정하고 나머지만 계속 돌려보세요.</p>
   </header>
 
   <main>
-    <section class="panel">
-      <h2 class="panel-title">1. 자동 생성</h2>
-      <div class="controls">
-        <div class="control-group">
-          <label>색상 개수</label>
-          <div class="segmented" id="countControl">
-            <button type="button" data-value="2">2</button>
-            <button type="button" data-value="3">3</button>
-            <button type="button" data-value="4" class="active">4</button>
-            <button type="button" data-value="5">5</button>
-          </div>
-        </div>
-        <div class="control-group">
-          <label for="schemeSelect">조합 방식</label>
-          <select id="schemeSelect">
-            <option value="random">랜덤</option>
-            <option value="complementary">보색</option>
-            <option value="analogous">유사색</option>
-            <option value="triadic">삼각 배색</option>
-            <option value="splitComplementary">분리 보색</option>
-            <option value="tetradic">사각 배색</option>
-            <option value="monochromatic">단색조</option>
-          </select>
-        </div>
-        <div class="control-group">
-          <label for="toneSelect">무드</label>
-          <select id="toneSelect">
-            <option value="contrast">다크+파스텔 (표지 추천)</option>
-            <option value="vivid">비비드</option>
-            <option value="pastel">파스텔</option>
-            <option value="earthy">어시(흙톤)</option>
-            <option value="moody">무디(다크)</option>
-          </select>
-        </div>
-        <button id="generateBtn" class="primary-btn">✨ 조합 생성 <kbd>Space</kbd></button>
+    <div class="controls">
+      <div class="chip-group" id="moodControl">
+        <span class="chip-group-label">무드</span>
+        <button type="button" class="chip active" data-value="contrast">표지 추천</button>
+        <button type="button" class="chip" data-value="vivid">비비드</button>
+        <button type="button" class="chip" data-value="pastel">파스텔</button>
+        <button type="button" class="chip" data-value="earthy">어시</button>
+        <button type="button" class="chip" data-value="moody">무디</button>
+        <button type="button" class="chip" data-value="mix">믹스</button>
       </div>
-
-      <div class="palette" id="palette"></div>
-      <p class="extract-hint" style="margin-top:12px">색상 클릭 = 복사 · 헥스코드 클릭 = 직접 수정 · 자물쇠 = 고정하고 나머지만 다시 생성</p>
-    </section>
-
-    <section class="panel">
-      <h2 class="panel-title">2. 표지 미리보기</h2>
-      <div class="preview-wrap">
-        <div class="preview-card" id="previewCard">
-          <input id="titleInput" class="cover-title" value="제안서 제목을 입력하세요" />
-          <div class="cover-swatches" id="coverSwatches"></div>
-          <div class="cover-footer">
-            <div class="cover-bar" id="coverBar"></div>
-            <span class="cover-brand">Color Combo Generator</span>
-          </div>
-        </div>
-        <div class="preview-actions">
-          <button id="copyHexBtn" class="ghost-btn">HEX 목록 복사</button>
-          <button id="copyCssBtn" class="ghost-btn">CSS 변수 복사</button>
-          <button id="downloadBtn" class="ghost-btn">PNG로 저장</button>
-        </div>
+      <div class="chip-group" id="countControl">
+        <span class="chip-group-label">색 개수</span>
+        <button type="button" class="chip active" data-value="2">2</button>
+        <button type="button" class="chip" data-value="3">3</button>
+        <button type="button" class="chip" data-value="4">4</button>
       </div>
-    </section>
+      <button id="generateBtn" class="primary-btn">✨ 새 조합 <kbd>Space</kbd></button>
+    </div>
+
+    <div class="combo-grid" id="comboGrid"></div>
+    <p class="hint">색 블록 클릭 = 헥스코드 복사 · "바꾸기" = 그 색만 다시 뽑기 · 고정한 카드는 새 조합을 만들어도 유지돼요</p>
 
     <section class="panel">
-      <h2 class="panel-title">3. 색 추출하기</h2>
+      <h2 class="panel-title">색 추출하기</h2>
       <p class="panel-desc">화면 어디서든 픽셀 색을 뽑거나, 이미지를 올려서 대표 색상을 헥스코드로 추출하세요.</p>
 
       <div class="extract-grid">
@@ -295,16 +302,17 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
           </label>
           <input type="file" id="imageInput" accept="image/*" hidden />
           <div class="picked-list" id="imagePalette"></div>
-          <button id="useImagePaletteBtn" class="ghost-btn" hidden style="margin-top:12px">이 조합을 팔레트에 사용하기</button>
+          <button id="useImagePaletteBtn" class="ghost-btn" hidden style="margin-top:12px">이 색들로 조합 카드 만들기</button>
         </div>
       </div>
     </section>
 
     <section class="panel">
       <div class="history-header">
-        <h2 class="panel-title">최근 조합</h2>
+        <h2 class="panel-title">담아둔 조합</h2>
         <button id="clearHistoryBtn" class="text-btn">기록 지우기</button>
       </div>
+      <p class="panel-desc" style="margin-top:0">카드를 고정하거나 복사·저장하면 여기에 쌓여요. 클릭하면 다시 불러옵니다.</p>
       <div class="history-strip" id="historyStrip"></div>
     </section>
   </main>
@@ -321,6 +329,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
   const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
   const lerp = (a, b, t) => a + (b - a) * t;
   const rand = (min, max) => Math.random() * (max - min) + min;
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
   function hslToRgb(h, s, l) {
     s /= 100; l /= 100;
@@ -369,12 +378,83 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
     return 0.2126 * chan(r) + 0.7152 * chan(g) + 0.0722 * chan(b);
   }
 
-  function textColorFor(hex) {
-    const [r, g, b] = hexToRgb(hex);
+  function contrastRatio(hexA, hexB) {
+    const la = relativeLuminance(...hexToRgb(hexA));
+    const lb = relativeLuminance(...hexToRgb(hexB));
+    const [hi, lo] = la > lb ? [la, lb] : [lb, la];
+    return (hi + 0.05) / (lo + 0.05);
+  }
+
+  // 블록 위 글자는 조합의 "상대 색"으로 — 조합이 만나는 순간을 그대로 보여준다.
+  // 상대 색들 중 대비가 가장 큰 색을 고르고, 그래도 너무 안 보이면 잉크로 대체.
+  function textColorFor(blockHex, comboHexes) {
+    let best = null, bestRatio = 0;
+    comboHexes.forEach(hex => {
+      if (hex === blockHex) return;
+      const ratio = contrastRatio(blockHex, hex);
+      if (ratio > bestRatio) { bestRatio = ratio; best = hex; }
+    });
+    if (best && bestRatio >= 1.5) return best;
+    const [r, g, b] = hexToRgb(blockHex);
     return relativeLuminance(r, g, b) > 0.5 ? "#24211f" : "#f5f3ee";
   }
 
-  // ---------- scheme logic ----------
+  // ---------- color names ----------
+  const NAMED_COLORS = [
+    ["#E93C2F", "PUNCH RED"], ["#F44336", "SIGNAL RED"], ["#B3202C", "CRIMSON"],
+    ["#7A1F2B", "WINE RED"], ["#F26D6D", "CORAL BLUSH"], ["#FF8A80", "SALMON GLOW"],
+    ["#F9A8BB", "CHERRY BLOSSOM"], ["#FEDDEB", "PETAL FROST"], ["#F4C2C2", "ROSE QUARTZ"],
+    ["#F4C9D6", "PEONY"],
+    ["#D96C8A", "DUSTY ROSE"], ["#974472", "BERRY BLUSH"], ["#C2185B", "RASPBERRY"],
+    ["#8E4A5B", "ROSEWOOD"], ["#E91E63", "HOT PINK"],
+    ["#E47130", "AUTUMN LEAF"], ["#FF5722", "FLAME"], ["#FF9800", "TANGERINE"],
+    ["#F57C00", "AMBER GLOW"], ["#FFB74D", "APRICOT"], ["#FFD8B1", "PEACH CREAM"],
+    ["#C96F33", "TERRACOTTA"], ["#A0522D", "SIENNA"], ["#8B5E3C", "CARAMEL"],
+    ["#553832", "COCOA BROWN"], ["#49252F", "PLUM WINE"], ["#6D4C41", "WALNUT"],
+    ["#3E2723", "DARK CHOCOLATE"], ["#34292A", "ESPRESSO"], ["#795548", "UMBER"],
+    ["#EBD3B8", "ALMOND LIGHT"], ["#D2B48C", "TAN SAND"], ["#B08968", "LATTE"],
+    ["#F7D354", "MUSTARD SUN"], ["#FFC107", "MARIGOLD"], ["#FFEB3B", "LEMON"],
+    ["#FFE082", "HONEY LIGHT"], ["#FAFFC7", "CREAM"], ["#FFF9E3", "IVORY MIST"],
+    ["#EDE5D0", "IVORY CREAM"], ["#F1EEE7", "SOFT BEIGE"], ["#D4C05E", "OLIVE GOLD"],
+    ["#C9A227", "ANTIQUE GOLD"],
+    ["#314719", "DARK SPRUCE"], ["#2E7D32", "FOREST GREEN"], ["#4CAF50", "SPRING GREEN"],
+    ["#4C7A4C", "MOSS"], ["#8FBC8F", "SAGE"], ["#A8D3A6", "MINT LEAF"],
+    ["#D1ECE2", "MINT FROST"], ["#6B8E23", "OLIVE GROVE"], ["#B7C074", "PISTACHIO"],
+    ["#355E3B", "HUNTER GREEN"], ["#2A4A3A", "BOTTLE GREEN"], ["#1E3A2A", "EVERGLADE"],
+    ["#8BC34A", "LIME LEAF"], ["#0B3D2E", "DEEP PINE"], ["#00695C", "EVERGREEN"],
+    ["#009688", "TEAL"], ["#1F7A8C", "OCEAN TEAL"], ["#4DB6AC", "SEAFOAM"],
+    ["#B2DFDB", "AQUA MIST"], ["#006064", "DEEP LAGOON"], ["#7FCDCD", "SOFT TURQUOISE"],
+    ["#00BCD4", "CYAN SPLASH"],
+    ["#0D1B2A", "MIDNIGHT NAVY"], ["#1F202F", "INK NAVY"], ["#23395B", "PRUSSIAN"],
+    ["#2F5DA8", "ROYAL BLUE"], ["#2196F3", "AZURE"], ["#3C8CE6", "SKY BOLD"],
+    ["#03A9F4", "CERULEAN"], ["#5F80A4", "SLATE BLUE"], ["#90ABD1", "CORNFLOWER"],
+    ["#A7C7E7", "POWDER BLUE"], ["#BBD3EA", "BABY BLUE"], ["#E0E7F0", "CLOUD BLUE"],
+    ["#607D8B", "BLUE SLATE"],
+    ["#38264B", "DEEP VIOLET"], ["#4A306D", "ROYAL PLUM"], ["#5E4B8B", "INDIGO NIGHT"],
+    ["#673AB7", "GRAPE SODA"], ["#6A4C93", "AMETHYST"], ["#9C27B0", "VIOLET POP"],
+    ["#9F83B3", "AMETHYST SMOKE"], ["#B39DDB", "LILAC"], ["#C88AB8", "LAVENDER ROSE"],
+    ["#D5C9DD", "LILAC FROST"], ["#E9D9F2", "PALE LAVENDER"],
+    ["#101211", "CARBON POWER"], ["#000000", "PITCH BLACK"], ["#1C1C1C", "ONYX"],
+    ["#333333", "CHARCOAL"], ["#5B5B5B", "GRAPHITE"], ["#8A8A8A", "STONE GRAY"],
+    ["#BDBDBD", "SILVER MIST"], ["#E0E0E0", "FOG GRAY"], ["#F5F5F0", "PAPER WHITE"],
+    ["#FFFFFF", "PURE WHITE"], ["#E3E1DA", "WARM GREIGE"], ["#8D8468", "DRIFTWOOD"],
+    ["#4E4A41", "DARK TAUPE"],
+  ].map(([hex, name]) => ({ name, rgb: hexToRgb(hex) }));
+
+  // redmean 근사 거리로 가장 가까운 이름을 찾는다
+  function nameOf(hex) {
+    const [r, g, b] = hexToRgb(hex);
+    let best = null, bestDist = Infinity;
+    for (const c of NAMED_COLORS) {
+      const rMean = (r + c.rgb[0]) / 2;
+      const dr = r - c.rgb[0], dg = g - c.rgb[1], db = b - c.rgb[2];
+      const dist = (2 + rMean / 256) * dr * dr + 4 * dg * dg + (2 + (255 - rMean) / 256) * db * db;
+      if (dist < bestDist) { bestDist = dist; best = c.name; }
+    }
+    return best;
+  }
+
+  // ---------- combo generation ----------
   const TONE_PRESETS = {
     contrast: { sStart: 25, sEnd: 35, lStart: 20, lEnd: 88, sJitter: 10 },
     vivid: { sStart: 65, sEnd: 85, lStart: 35, lEnd: 65, sJitter: 8 },
@@ -382,57 +462,87 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
     earthy: { sStart: 25, sEnd: 45, lStart: 28, lEnd: 60, sJitter: 8 },
     moody: { sStart: 15, sEnd: 35, lStart: 12, lEnd: 38, sJitter: 8 },
   };
+  const SCHEMES = ["complementary", "analogous", "triadic", "splitComplementary", "tetradic", "monochromatic"];
 
   function schemeHues(base, scheme, count) {
     let offsets;
     switch (scheme) {
       case "complementary": offsets = [0, 180]; break;
-      case "analogous": offsets = [0, 30, -30, 60, -60]; break;
+      case "analogous": offsets = [0, 30, -30, 60]; break;
       case "triadic": offsets = [0, 120, 240]; break;
       case "splitComplementary": offsets = [0, 150, 210]; break;
       case "tetradic": offsets = [0, 90, 180, 270]; break;
-      case "monochromatic": offsets = [0, 0, 0, 0, 0]; break;
-      default:
-        offsets = Array.from({ length: count }, (_, i) => (360 / count) * i + rand(-15, 15));
+      default: offsets = [0, 0, 0, 0];
     }
     return Array.from({ length: count }, (_, i) => (base + offsets[i % offsets.length] + 360) % 360);
   }
 
-  // ---------- state ----------
-  const state = {
-    count: 4,
-    scheme: "random",
-    tone: "contrast",
-    baseHue: Math.random() * 360,
-    colors: [], // {h,s,l,locked}
-  };
-
-  function buildPalette({ newBase = true } = {}) {
-    if (newBase) state.baseHue = Math.random() * 360;
-    const hues = schemeHues(state.baseHue, state.scheme, state.count);
-    const preset = TONE_PRESETS[state.tone];
-    const next = [];
-    for (let i = 0; i < state.count; i++) {
-      const existing = state.colors[i];
-      if (existing && existing.locked) { next.push(existing); continue; }
-      const t = state.count === 1 ? 0 : i / (state.count - 1);
+  function makeCombo(mood, count) {
+    const tone = mood === "mix" ? pick(Object.keys(TONE_PRESETS)) : mood;
+    const preset = TONE_PRESETS[tone];
+    const scheme = pick(SCHEMES);
+    const base = Math.random() * 360;
+    const hues = schemeHues(base, scheme, count);
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+      const t = count === 1 ? 0 : i / (count - 1);
       let h = hues[i];
-      if (state.scheme !== "monochromatic") h = (h + rand(-6, 6) + 360) % 360;
+      if (scheme !== "monochromatic") h = (h + rand(-6, 6) + 360) % 360;
       const s = clamp(lerp(preset.sStart, preset.sEnd, t) + rand(-preset.sJitter, preset.sJitter), 5, 95);
       const l = clamp(lerp(preset.lStart, preset.lEnd, t) + rand(-5, 5), 5, 95);
-      next.push({ h, s, l, locked: false });
+      colors.push(hslToHex(h, s, l));
     }
-    state.colors = next;
+    return { colors, tone };
+  }
+
+  // ---------- state ----------
+  const CARD_SLOTS = 4;
+  const state = {
+    mood: "contrast",
+    count: 2,
+    cards: Array.from({ length: CARD_SLOTS }, () => ({ colors: [], tone: "contrast", pinned: false })),
+  };
+
+  function regenerate() {
+    state.cards.forEach(card => {
+      if (!card.pinned) {
+        const combo = makeCombo(state.mood, state.count);
+        card.colors = combo.colors;
+        card.tone = combo.tone;
+      }
+    });
+    renderCards();
+  }
+
+  // 한 색만 다시 뽑는다 — 나머지 색과 조화로운 색상(hue) 오프셋 안에서,
+  // 카드의 톤을 유지한 채로. 너무 비슷한 색이 나오면 다시 시도.
+  const HARMONY_OFFSETS = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+
+  function rerollColor(card, idx) {
+    const preset = TONE_PRESETS[card.tone] || TONE_PRESETS.contrast;
+    const others = card.colors.filter((_, i) => i !== idx);
+    const count = card.colors.length;
+    const t = count === 1 ? 0 : idx / (count - 1);
+    for (let attempt = 0; attempt < 12; attempt++) {
+      const baseHex = others.length ? pick(others) : card.colors[idx];
+      const [bh] = rgbToHsl(...hexToRgb(baseHex));
+      const h = (bh + pick(HARMONY_OFFSETS) + rand(-6, 6) + 360) % 360;
+      const s = clamp(lerp(preset.sStart, preset.sEnd, t) + rand(-preset.sJitter, preset.sJitter), 5, 95);
+      const l = clamp(lerp(preset.lStart, preset.lEnd, t) + rand(-5, 5), 5, 95);
+      const hex = hslToHex(h, s, l);
+      const distinct = others.every(o => contrastRatio(hex, o) >= 1.25) && hex !== card.colors[idx];
+      if (distinct || attempt === 11) {
+        card.colors[idx] = hex;
+        break;
+      }
+    }
+    renderCards();
   }
 
   // ---------- dom refs ----------
   const $ = id => document.getElementById(id);
-  const paletteEl = $("palette"), countControl = $("countControl"),
-    schemeSelect = $("schemeSelect"), toneSelect = $("toneSelect"),
-    generateBtn = $("generateBtn"), titleInput = $("titleInput"),
-    previewCard = $("previewCard"), coverSwatches = $("coverSwatches"),
-    coverBar = $("coverBar"), copyHexBtn = $("copyHexBtn"),
-    copyCssBtn = $("copyCssBtn"), downloadBtn = $("downloadBtn"),
+  const comboGrid = $("comboGrid"), moodControl = $("moodControl"),
+    countControl = $("countControl"), generateBtn = $("generateBtn"),
     historyStrip = $("historyStrip"), clearHistoryBtn = $("clearHistoryBtn"),
     toast = $("toast"), eyedropperBtn = $("eyedropperBtn"),
     pickedList = $("pickedList"), dropzone = $("dropzone"),
@@ -473,111 +583,141 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
     ta.remove();
   }
 
-  // ---------- render ----------
-  function render() {
-    renderPalette();
-    renderPreview();
-  }
+  // ---------- render cards ----------
+  function renderCards() {
+    comboGrid.innerHTML = "";
+    state.cards.forEach((card, idx) => {
+      const el = document.createElement("div");
+      el.className = "combo-card" + (card.pinned ? " pinned" : "");
 
-  function renderPalette() {
-    paletteEl.innerHTML = "";
-    state.colors.forEach((c, i) => {
-      const hex = hslToHex(c.h, c.s, c.l);
-      const swatch = document.createElement("div");
-      swatch.className = "swatch";
+      const isDuo = card.colors.length === 2;
+      const blocks = document.createElement("div");
+      blocks.className = "combo-blocks" + (isDuo ? " duo" : "");
+      card.colors.forEach((hex, blockIdx) => {
+        const block = document.createElement("div");
+        block.className = "block";
+        block.style.background = hex;
+        block.style.color = textColorFor(hex, card.colors);
+        block.title = "클릭하면 헥스코드가 복사돼요";
 
-      const colorDiv = document.createElement("div");
-      colorDiv.className = "swatch-color";
-      colorDiv.style.background = hex;
-      colorDiv.title = "클릭하면 헥스코드가 복사돼요";
+        const nameEl = document.createElement("span");
+        nameEl.className = "block-name";
+        nameEl.textContent = nameOf(hex);
+        const hexEl = document.createElement("span");
+        hexEl.className = "block-hex";
+        hexEl.textContent = "HEX " + hex.toUpperCase().slice(1);
 
-      const lockBtn = document.createElement("button");
-      lockBtn.className = "lock-btn";
-      lockBtn.type = "button";
-      lockBtn.textContent = c.locked ? "🔒" : "🔓";
-      lockBtn.title = c.locked ? "고정 해제" : "이 색 고정";
-      lockBtn.addEventListener("click", e => {
-        e.stopPropagation();
-        c.locked = !c.locked;
-        renderPalette();
+        // duo 카드의 아래 블록은 경계를 향해 순서를 거울처럼 뒤집는다 (HEX가 위, 이름이 아래)
+        if (isDuo && blockIdx === 1) {
+          block.appendChild(hexEl);
+          block.appendChild(nameEl);
+        } else {
+          block.appendChild(nameEl);
+          block.appendChild(hexEl);
+        }
+
+        const changeBtn = document.createElement("button");
+        changeBtn.type = "button";
+        changeBtn.className = "block-change";
+        changeBtn.textContent = "바꾸기 ↻";
+        changeBtn.title = "이 색만 다시 뽑아요";
+        changeBtn.addEventListener("click", e => {
+          e.stopPropagation();
+          rerollColor(card, blockIdx);
+        });
+        block.appendChild(changeBtn);
+
+        block.addEventListener("click", () => copyText(hex.toUpperCase(), hex.toUpperCase() + " 복사됨"));
+        blocks.appendChild(block);
       });
-      colorDiv.appendChild(lockBtn);
 
-      const label = document.createElement("div");
-      label.className = "swatch-label";
+      const actions = document.createElement("div");
+      actions.className = "card-actions";
 
-      const hexEl = document.createElement("b");
-      hexEl.textContent = hex.toUpperCase();
-      hexEl.title = "클릭하면 색을 직접 고를 수 있어요";
-
-      const colorInput = document.createElement("input");
-      colorInput.type = "color";
-      colorInput.value = hex;
-      colorInput.addEventListener("input", () => {
-        const [r, g, b] = hexToRgb(colorInput.value);
-        const [h, s, l] = rgbToHsl(r, g, b);
-        Object.assign(c, { h, s, l });
-        colorDiv.style.background = colorInput.value;
-        hexEl.textContent = colorInput.value.toUpperCase();
-        renderPreview();
+      const pinBtn = document.createElement("button");
+      pinBtn.type = "button";
+      pinBtn.textContent = card.pinned ? "📌 고정됨" : "📌 고정";
+      pinBtn.className = card.pinned ? "pin-on" : "";
+      pinBtn.addEventListener("click", () => {
+        card.pinned = !card.pinned;
+        if (card.pinned) pushHistory(card.colors);
+        renderCards();
       });
-      colorInput.addEventListener("change", () => renderPalette());
-      hexEl.addEventListener("click", () => colorInput.click());
 
-      const idxEl = document.createElement("span");
-      idxEl.textContent = "#" + (i + 1);
+      const copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.textContent = "HEX 복사";
+      copyBtn.addEventListener("click", () => {
+        copyText(card.colors.map(h => h.toUpperCase()).join(", "), "조합 HEX가 복사됐어요");
+        pushHistory(card.colors);
+      });
 
-      label.appendChild(hexEl);
-      label.appendChild(colorInput);
-      label.appendChild(idxEl);
+      const pngBtn = document.createElement("button");
+      pngBtn.type = "button";
+      pngBtn.textContent = "PNG 저장";
+      pngBtn.addEventListener("click", () => {
+        downloadCardPng(card.colors);
+        pushHistory(card.colors);
+      });
 
-      swatch.appendChild(colorDiv);
-      swatch.appendChild(label);
-      colorDiv.addEventListener("click", () => copyText(hex.toUpperCase(), hex.toUpperCase() + " 복사됨"));
+      actions.appendChild(pinBtn);
+      actions.appendChild(copyBtn);
+      actions.appendChild(pngBtn);
 
-      paletteEl.appendChild(swatch);
+      el.appendChild(blocks);
+      el.appendChild(actions);
+      comboGrid.appendChild(el);
     });
   }
 
-  function renderPreview() {
-    const hexes = state.colors.map(c => hslToHex(c.h, c.s, c.l));
-    if (hexes.length === 0) return;
+  // ---------- PNG export (카드 그대로) ----------
+  function downloadCardPng(colors) {
+    const W = 900, H = 1200;
+    hiddenCanvas.width = W;
+    hiddenCanvas.height = H;
+    const ctx = hiddenCanvas.getContext("2d");
+    const blockH = H / colors.length;
 
-    previewCard.style.background = hexes[hexes.length - 1];
-    titleInput.style.color = textColorFor(hexes[hexes.length - 1]);
+    const isDuo = colors.length === 2;
+    colors.forEach((hex, i) => {
+      ctx.fillStyle = hex;
+      ctx.fillRect(0, i * blockH, W, blockH + 1);
 
-    coverSwatches.innerHTML = "";
-    state.colors.forEach((c, i) => {
-      const ringHex = hslToHex(c.h, c.s, c.l);
-      const pair = state.colors[(i + 1) % state.colors.length];
-      const dotHex = hslToHex(pair.h, pair.s, pair.l);
+      ctx.fillStyle = textColorFor(hex, colors);
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
 
-      const donut = document.createElement("div");
-      donut.className = "cover-donut";
-      const ring = document.createElement("div");
-      ring.className = "ring";
-      ring.style.background = ringHex;
-      const dot = document.createElement("div");
-      dot.className = "dot";
-      dot.style.background = dotHex;
-      ring.appendChild(dot);
-      const span = document.createElement("span");
-      span.textContent = ringHex.toUpperCase();
-      donut.appendChild(ring);
-      donut.appendChild(span);
-      coverSwatches.appendChild(donut);
+      if (isDuo) {
+        // 두 색이 만나는 경계 쪽으로 텍스트를 모은다
+        const boundary = H / 2;
+        if (i === 0) {
+          ctx.font = "800 72px sans-serif";
+          ctx.fillText(nameOf(hex), W / 2, boundary - 150);
+          ctx.font = "600 30px sans-serif";
+          ctx.fillText("HEX   " + hex.toUpperCase().slice(1), W / 2, boundary - 70);
+        } else {
+          ctx.font = "600 30px sans-serif";
+          ctx.fillText("HEX   " + hex.toUpperCase().slice(1), W / 2, boundary + 70);
+          ctx.font = "800 72px sans-serif";
+          ctx.fillText(nameOf(hex), W / 2, boundary + 150);
+        }
+      } else {
+        const cy = i * blockH + blockH / 2;
+        ctx.font = "800 56px sans-serif";
+        ctx.fillText(nameOf(hex), W / 2, cy - 24);
+        ctx.font = "600 26px sans-serif";
+        ctx.fillText("HEX   " + hex.toUpperCase().slice(1), W / 2, cy + 34);
+      }
     });
 
-    coverBar.innerHTML = "";
-    hexes.forEach(hex => {
-      const seg = document.createElement("span");
-      seg.style.background = hex;
-      coverBar.appendChild(seg);
-    });
+    const link = document.createElement("a");
+    link.download = "color-combo.png";
+    link.href = hiddenCanvas.toDataURL("image/png");
+    link.click();
   }
 
-  // ---------- history ----------
-  const HISTORY_KEY = "colorComboHistory";
+  // ---------- history (담아둔 조합) ----------
+  const HISTORY_KEY = "colorComboSaved";
 
   function loadHistory() {
     try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
@@ -585,16 +725,15 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
   }
 
   function saveHistory(list) {
-    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, 12))); }
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, 20))); }
     catch { /* storage unavailable */ }
   }
 
-  function pushHistory() {
+  function pushHistory(colors) {
     const list = loadHistory();
-    list.unshift({
-      colors: state.colors.map(({ h, s, l }) => ({ h, s, l })),
-      scheme: state.scheme, tone: state.tone, count: state.count,
-    });
+    const key = colors.join(",");
+    if (list.some(e => e.join(",") === key)) return;
+    list.unshift(colors);
     saveHistory(list);
     renderHistory();
   }
@@ -602,159 +741,48 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
   function renderHistory() {
     const list = loadHistory();
     historyStrip.innerHTML = "";
-    list.forEach(entry => {
+    list.forEach(colors => {
       const item = document.createElement("button");
       item.type = "button";
       item.className = "history-item";
-      item.title = "클릭하면 이 조합을 다시 불러와요";
-      entry.colors.forEach(c => {
+      item.title = "클릭하면 카드로 다시 불러와요";
+      colors.forEach(hex => {
         const seg = document.createElement("span");
-        seg.style.background = hslToHex(c.h, c.s, c.l);
+        seg.style.background = hex;
         item.appendChild(seg);
       });
       item.addEventListener("click", () => {
-        state.count = entry.count;
-        state.scheme = entry.scheme;
-        state.tone = entry.tone;
-        state.colors = entry.colors.map(c => ({ ...c, locked: false }));
-        schemeSelect.value = entry.scheme;
-        toneSelect.value = entry.tone;
-        setActiveCount(entry.count);
-        render();
+        const slot = state.cards.find(c => !c.pinned) || state.cards[0];
+        slot.colors = [...colors];
+        slot.tone = state.mood === "mix" ? "contrast" : state.mood;
+        renderCards();
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
       historyStrip.appendChild(item);
     });
   }
 
-  function setActiveCount(count) {
-    [...countControl.children].forEach(btn => {
-      btn.classList.toggle("active", Number(btn.dataset.value) === count);
+  // ---------- controls ----------
+  function bindChips(container, onChange) {
+    container.addEventListener("click", e => {
+      const btn = e.target.closest("button.chip");
+      if (!btn) return;
+      [...container.querySelectorAll(".chip")].forEach(c => c.classList.toggle("active", c === btn));
+      onChange(btn.dataset.value);
     });
   }
 
-  // ---------- events ----------
-  countControl.addEventListener("click", e => {
-    const btn = e.target.closest("button");
-    if (!btn) return;
-    state.count = Number(btn.dataset.value);
-    setActiveCount(state.count);
-    buildPalette({ newBase: false });
-    render();
-  });
+  bindChips(moodControl, value => { state.mood = value; regenerate(); });
+  bindChips(countControl, value => { state.count = Number(value); regenerate(); });
 
-  schemeSelect.addEventListener("change", () => {
-    state.scheme = schemeSelect.value;
-    buildPalette({ newBase: false });
-    render();
-  });
-
-  toneSelect.addEventListener("change", () => {
-    state.tone = toneSelect.value;
-    buildPalette({ newBase: false });
-    render();
-  });
-
-  function generate() {
-    buildPalette({ newBase: true });
-    render();
-    pushHistory();
-  }
-
-  generateBtn.addEventListener("click", generate);
+  generateBtn.addEventListener("click", regenerate);
 
   document.addEventListener("keydown", e => {
     const tag = document.activeElement.tagName;
     if (e.code === "Space" && tag !== "INPUT" && tag !== "SELECT" && tag !== "TEXTAREA" && tag !== "BUTTON") {
       e.preventDefault();
-      generate();
+      regenerate();
     }
-  });
-
-  copyHexBtn.addEventListener("click", () => {
-    const hexes = state.colors.map(c => hslToHex(c.h, c.s, c.l).toUpperCase());
-    copyText(hexes.join(", "), "HEX 목록이 복사됐어요");
-  });
-
-  copyCssBtn.addEventListener("click", () => {
-    const css = ":root {\n" + state.colors.map((c, i) => "  --color-" + (i + 1) + ": " + hslToHex(c.h, c.s, c.l) + ";").join("\n") + "\n}";
-    copyText(css, "CSS 변수가 복사됐어요");
-  });
-
-  downloadBtn.addEventListener("click", () => {
-    const W = 800, H = 1000;
-    hiddenCanvas.width = W;
-    hiddenCanvas.height = H;
-    const ctx = hiddenCanvas.getContext("2d");
-    const hexes = state.colors.map(c => hslToHex(c.h, c.s, c.l));
-    const inkOnBg = textColorFor(hexes[hexes.length - 1]);
-
-    ctx.fillStyle = hexes[hexes.length - 1];
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.fillStyle = inkOnBg;
-    ctx.font = "600 40px sans-serif";
-    ctx.textBaseline = "top";
-    wrapText(ctx, titleInput.value || "Untitled", 60, 60, W - 120, 48);
-
-    const donutY = 220, r = 56;
-    hexes.forEach((hex, i) => {
-      const cx = 60 + i * (r * 2 + 30) + r;
-      ctx.beginPath();
-      ctx.arc(cx, donutY, r, 0, Math.PI * 2);
-      ctx.fillStyle = hex;
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(cx, donutY, r * 0.45, 0, Math.PI * 2);
-      ctx.fillStyle = hexes[(i + 1) % hexes.length];
-      ctx.fill();
-      ctx.fillStyle = inkOnBg;
-      ctx.font = "12px monospace";
-      ctx.textAlign = "center";
-      ctx.fillText(hex.toUpperCase(), cx, donutY + r + 14);
-      ctx.textAlign = "left";
-    });
-
-    const barY = H - 90, barH = 16;
-    let x = 60;
-    const barW = W - 120;
-    hexes.forEach(hex => {
-      const w = barW / hexes.length;
-      ctx.fillStyle = hex;
-      ctx.fillRect(x, barY, w, barH);
-      x += w;
-    });
-
-    ctx.fillStyle = inkOnBg;
-    ctx.font = "12px sans-serif";
-    ctx.fillText("Color Combo Generator", 60, H - 50);
-
-    const link = document.createElement("a");
-    link.download = "color-combo.png";
-    link.href = hiddenCanvas.toDataURL("image/png");
-    link.click();
-  });
-
-  function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-    const words = text.split(" ");
-    let line = "";
-    let curY = y;
-    words.forEach(word => {
-      const test = line + word + " ";
-      if (ctx.measureText(test).width > maxWidth && line) {
-        ctx.fillText(line, x, curY);
-        line = word + " ";
-        curY += lineHeight;
-      } else {
-        line = test;
-      }
-    });
-    ctx.fillText(line, x, curY);
-  }
-
-  clearHistoryBtn.addEventListener("click", () => {
-    saveHistory([]);
-    renderHistory();
-    showToast("기록을 지웠어요");
   });
 
   // ---------- eyedropper ----------
@@ -768,24 +796,15 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
     dot.className = "dot";
     dot.style.background = hex;
     chip.appendChild(dot);
-    chip.append(hex.toUpperCase());
-    chip.title = "클릭하면 팔레트에 추가돼요";
-    chip.addEventListener("click", () => addHexToPalette(hex));
+    chip.append(hex.toUpperCase() + " · " + nameOf(hex));
+    chip.title = "클릭하면 헥스코드가 복사돼요";
+    chip.addEventListener("click", () => copyText(hex.toUpperCase(), hex.toUpperCase() + " 복사됨"));
     return chip;
   }
 
   function renderPickedList() {
     pickedList.innerHTML = "";
     pickedColors.forEach(hex => pickedList.appendChild(makeChip(hex)));
-  }
-
-  function addHexToPalette(hex) {
-    const [r, g, b] = hexToRgb(hex);
-    const [h, s, l] = rgbToHsl(r, g, b);
-    const idx = state.colors.findIndex(c => !c.locked);
-    state.colors[idx === -1 ? 0 : idx] = { h, s, l, locked: false };
-    render();
-    showToast(hex.toUpperCase() + " 팔레트에 추가됨");
   }
 
   if ("EyeDropper" in window) {
@@ -831,16 +850,17 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
       .map(e => ({ count: e.count, r: Math.round(e.r / e.count), g: Math.round(e.g / e.count), b: Math.round(e.b / e.count) }))
       .sort((a, b) => b.count - a.count);
 
+    const maxColors = Math.max(state.count, 2);
     const chosen = [];
     const minDist = 40;
     for (const c of sorted) {
-      if (chosen.length >= state.count) break;
+      if (chosen.length >= maxColors) break;
       const tooClose = chosen.some(o => Math.hypot(o.r - c.r, o.g - c.g, o.b - c.b) < minDist);
       if (!tooClose) chosen.push(c);
     }
-    if (chosen.length < state.count) {
+    if (chosen.length < maxColors) {
       for (const c of sorted) {
-        if (chosen.length >= state.count) break;
+        if (chosen.length >= maxColors) break;
         if (!chosen.includes(c)) chosen.push(c);
       }
     }
@@ -857,16 +877,13 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
 
   useImagePaletteBtn.addEventListener("click", () => {
     if (!extractedPalette.length) return;
-    state.count = extractedPalette.length;
-    setActiveCount(state.count);
-    state.colors = extractedPalette.map(hex => {
-      const [r, g, b] = hexToRgb(hex);
-      const [h, s, l] = rgbToHsl(r, g, b);
-      return { h, s, l, locked: false };
-    });
-    render();
-    pushHistory();
-    showToast("이미지 팔레트를 적용했어요");
+    const slot = state.cards.find(c => !c.pinned) || state.cards[0];
+    slot.colors = [...extractedPalette];
+    slot.tone = state.mood === "mix" ? "contrast" : state.mood;
+    renderCards();
+    pushHistory(extractedPalette);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    showToast("추출한 색으로 카드를 만들었어요");
   });
 
   function handleImageFile(file) {
@@ -893,8 +910,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .dropzone:focus
   dropzone.addEventListener("drop", e => handleImageFile(e.dataTransfer.files[0]));
 
   // ---------- init ----------
-  buildPalette({ newBase: true });
-  render();
+  regenerate();
   renderHistory();
 })();
 </script>
