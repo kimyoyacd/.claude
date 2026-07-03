@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="제안서 표지용 컬러 조합을 카드로 자동 생성하고, 화면·이미지에서 헥스코드를 추출하는 무료 도구" />
+<meta name="theme-color" content="#e3e1da" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#17161a" media="(prefers-color-scheme: dark)" />
+<meta property="og:title" content="Color Combo Generator" />
+<meta property="og:description" content="스페이스바 한 번에 감각적인 컬러 조합 카드 4장. 색 이름과 헥스코드까지." />
 <title>Color Combo Generator</title>
 <style>
 :root {
@@ -57,8 +62,22 @@ body {
 
 .app { max-width: 1080px; margin: 0 auto; padding: 48px 20px 96px; }
 
-.app-header h1 { font-size: clamp(26px, 5vw, 34px); margin: 0 0 8px; letter-spacing: -0.02em; }
-.subtitle { color: var(--ink-soft); margin: 0 0 28px; font-size: 15px; }
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.app-header h1 {
+  font-size: clamp(30px, 6vw, 46px);
+  font-weight: 800;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.subtitle { color: var(--ink-soft); margin: 0 0 32px; font-size: 15px; max-width: 46em; }
 
 /* ---------- controls ---------- */
 .controls {
@@ -112,6 +131,11 @@ button:focus-visible, .dropzone:focus-within {
   display: flex;
   flex-direction: column;
   border: 2px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.combo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
 }
 .combo-card.pinned { border-color: var(--ink); }
 
@@ -245,8 +269,36 @@ button:focus-visible, .dropzone:focus-within {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 48px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+/* 모바일: 생성 버튼을 엄지가 닿는 곳에 */
+@media (max-width: 640px) {
+  .app { padding-bottom: 130px; }
+  .primary-btn {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 9;
+    justify-content: center;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+  }
+  .toast { bottom: 84px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .toast { transition: none; }
+  .combo-card { transition: none; }
+  .combo-card:hover { transform: none; }
 }
 </style>
 </head>
@@ -254,8 +306,9 @@ button:focus-visible, .dropzone:focus-within {
 <div class="app">
 
   <header class="app-header">
-    <h1>Color Combo Generator</h1>
-    <p class="subtitle">스페이스바 한 번에 조합 카드 4장. 마음에 드는 카드는 고정하고 나머지만 계속 돌려보세요.</p>
+    <p class="eyebrow">COLOR COMBO GENERATOR</p>
+    <h1>감각적인 컬러 조합,<br />스페이스바 한 번.</h1>
+    <p class="subtitle">제안서 표지 컬러 고민 끝 — 조합 카드 4장이 바로 나옵니다. 마음에 드는 카드는 고정하고, 아쉬운 색은 그 색만 바꿔보세요.</p>
   </header>
 
   <main>
@@ -316,6 +369,11 @@ button:focus-visible, .dropzone:focus-within {
       <div class="history-strip" id="historyStrip"></div>
     </section>
   </main>
+
+  <footer class="app-footer">
+    <span>무료로 쓰는 도구예요. 만든 팔레트와 PNG는 자유롭게 사용하세요.</span>
+    <button id="shareBtn" class="ghost-btn">🔗 링크 복사해서 공유하기</button>
+  </footer>
 
   <div class="toast" id="toast" role="status"></div>
 </div>
@@ -908,6 +966,11 @@ button:focus-visible, .dropzone:focus-within {
     dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove("dragover"); })
   );
   dropzone.addEventListener("drop", e => handleImageFile(e.dataTransfer.files[0]));
+
+  // ---------- share ----------
+  document.getElementById("shareBtn").addEventListener("click", () => {
+    copyText(location.href, "링크가 복사됐어요 — 붙여넣어 공유하세요");
+  });
 
   // ---------- init ----------
   regenerate();
